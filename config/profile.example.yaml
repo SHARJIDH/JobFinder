@@ -1,0 +1,91 @@
+# Candidate profile — the single source of truth for everything the assistant
+# may say about you. Generated resumes, cover letters and application answers
+# are only allowed to use facts that appear here (or in your uploaded master
+# resume). Edit this file from the dashboard (Profile → Edit YAML) or directly
+# in data/profile.yaml. Do NOT commit your filled-in copy.
+#
+# Rules:
+#  - Leave unknown values blank. Blank application facts are shown as
+#    "NEEDS YOUR INPUT" instead of being guessed.
+#  - Bullets may be plain strings; stable ids are assigned automatically.
+#  - Set `verified: true` on a skill only after confirming it against your resume.
+
+contact:
+  full_name: ""
+  email: ""
+  phone: ""
+  location: ""
+  linkedin: ""
+  github: ""
+  portfolio: ""
+
+headline: ""
+summary: ""
+
+interests:
+  - Software engineering
+  - Backend engineering
+  - Full-stack development
+  - AI engineering
+  - Agentic AI
+  - Cloud technologies
+
+education:
+  - degree: B.Tech in Electrical Engineering
+    institution: IIT Tirupati
+    start: ""
+    end: ""
+    grade: ""
+
+experience:
+  - title: Associate Software Engineer
+    company: Kyndryl India
+    location: ""
+    start: "2025-07"
+    end: ""
+    technologies: []
+    bullets: []   # add your real responsibilities/achievements from your resume
+
+projects: []
+#  - name: Example project
+#    url: ""
+#    technologies: [Python, FastAPI]
+#    bullets:
+#      - What you built and the verified outcome
+
+# Skills listed in your brief. They stay unverified until you confirm them
+# (or until the uploaded resume provides evidence — shown in the dashboard).
+skills:
+  - {name: React, category: frontend, proficiency: "", verified: false}
+  - {name: Next.js, category: frontend, proficiency: "", verified: false}
+  - {name: TypeScript, category: language, proficiency: "", verified: false}
+  - {name: Node.js, category: backend, proficiency: "", verified: false}
+  - {name: Python, category: language, proficiency: "", verified: false}
+  - {name: SQL, category: data, proficiency: "", verified: false}
+  - {name: AWS, category: cloud, proficiency: "", verified: false}
+  - {name: Azure, category: cloud, proficiency: "", verified: false}
+  - {name: Docker, category: cloud, proficiency: "", verified: false}
+  - {name: Kubernetes, category: cloud, proficiency: "", verified: false}
+  - {name: LLMs, category: ai, proficiency: "", verified: false}
+
+certifications: []
+achievements: []
+
+# Extra context in your own words: projects, hackathons, coursework, tools you used, impact you can
+# vouch for. Used for matching and tailoring, and when building the profile from your resumes.
+# Write only true facts.
+context_notes: []
+#  - title: Internal automation at Kyndryl
+#    text: |
+#      What you built, the tech stack, and outcomes you can verify.
+
+application_facts:
+  work_authorization_india: ""
+  requires_visa_sponsorship: ""
+  notice_period: ""
+  current_ctc: ""
+  expected_ctc: ""
+  willing_to_relocate: ""
+  earliest_start_date: ""
+
+extra_answers: {}

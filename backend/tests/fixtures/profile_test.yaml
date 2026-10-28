@@ -1,0 +1,35 @@
+# Fictional test profile (not the real candidate)
+contact:
+  full_name: Test Candidate
+  email: test@example.com
+  phone: ""
+  location: Hyderabad, India
+  linkedin: https://linkedin.com/in/test
+  github: https://github.com/test
+headline: Associate Software Engineer
+summary: ""
+interests: [Backend engineering, AI engineering, Cloud technologies]
+education:
+  - degree: B.Tech in Electrical Engineering
+    institution: IIT Tirupati
+    end: "2025-05"
+experience:
+  - title: Associate Software Engineer
+    company: Kyndryl India
+    start: "2025-07"
+    technologies: [Python, FastAPI]
+    bullets:
+      - Built internal REST APIs in Python and FastAPI for an automation dashboard
+      - Wrote unit tests with pytest that cut regression bugs by 30%
+projects:
+  - name: RAG Notes Assistant
+    technologies: [Python, LLMs, PostgreSQL]
+    bullets:
+      - Built a retrieval-augmented question answering app over personal notes using an LLM API
+skills:
+  - {name: Python, verified: true}
+  - {name: FastAPI, verified: true}
+  - {name: React, verified: false}
+  - {name: Kubernetes, verified: false}
+application_facts:
+  notice_period: "30 days"

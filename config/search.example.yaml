@@ -1,0 +1,189 @@
+# Job-search settings. Edit from the dashboard (Settings) or in data/search.yaml.
+#
+# Source providers (each verified reachable on 2026-10-27; robots.txt is evaluated per RFC 9309 on every request):
+#   greenhouse      — public Job Board API (boards-api.greenhouse.io), documented.          board = token
+#   lever           — public Postings API (api.lever.co/v0/postings), documented.           board = token
+#   ashby           — public Posting API (api.ashbyhq.com/posting-api), documented.         board = token
+#   workday         — JSON used by the company's own career site.                          board = "host|tenant|site"
+#   eightfold       — /api/pcsx, explicitly Allowed in the site's robots.txt (Microsoft, Qualcomm). board = "host|domain"
+#   amazon          — amazon.jobs search JSON (robots.txt only disallows /internal).        board = ISO-3 country code
+#   atlassian       — Atlassian's careers listings JSON (full list → closures detected).   board = any label
+#   oracle          — Oracle Recruiting Cloud candidate REST API.                           board = "host|siteNumber|locationId"
+#   google          — Google Careers results page, newest first; page 1 only (robots.txt disallows ?page=). board = location
+#   sitemap         — company sitemap + schema.org JobPosting on each job page (Intuit).    board = "sitemap_url|url_regex"
+#   smartrecruiters — documented API, but its robots.txt disallows generic agents → disabled by default.
+#
+# Web search (see `web_search` below): Gemini + Grounding with Google Search, restricted to each company's
+# `official_domains`. By default it runs only for companies with no enabled feed (Uber, Walmart, ServiceNow…).
+# Results whose official page is readable become verified postings; others are stored as "web leads"
+# (never ranked until you paste the description from the official page).
+
+companies:
+  # ---- Initial watchlist ----
+  - name: Google
+    priority: 1
+    careers_url: https://www.google.com/about/careers/applications/jobs/results/?location=India&q=software%20engineer
+    official_domains: [google.com]
+    sources:
+      - {provider: google, board: India, search_terms: ["software engineer", "backend", "full stack", "machine learning", "AI engineer"]}
+  - name: Microsoft
+    priority: 1
+    careers_url: https://apply.careers.microsoft.com/careers?query=software%20engineer&location=India
+    official_domains: [apply.careers.microsoft.com, careers.microsoft.com, jobs.careers.microsoft.com]
+    sources:
+      - {provider: eightfold, board: "apply.careers.microsoft.com|microsoft.com", search_terms: ["software engineer", "machine learning", "AI engineer"]}
+  - name: Amazon
+    priority: 1
+    careers_url: https://www.amazon.jobs/en/search?base_query=software+development+engineer&country=IND
+    official_domains: [amazon.jobs]
+    sources:
+      - {provider: amazon, board: IND, search_terms: ["software development engineer", "machine learning engineer", "applied scientist"]}
+  - name: Adobe
+    priority: 1
+    careers_url: https://adobe.wd5.myworkdayjobs.com/external_experienced
+    official_domains: [adobe.wd5.myworkdayjobs.com, careers.adobe.com]
+    sources:
+      - {provider: workday, board: "adobe.wd5.myworkdayjobs.com|adobe|external_experienced", search_terms: ["software engineer", "machine learning", "developer"]}
+  - name: NVIDIA
+    priority: 1
+    careers_url: https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite
+    official_domains: [nvidia.wd5.myworkdayjobs.com]
+    sources:
+      - {provider: workday, board: "nvidia.wd5.myworkdayjobs.com|nvidia|NVIDIAExternalCareerSite", search_terms: ["software engineer", "machine learning", "AI engineer"]}
+  - name: Salesforce
+    priority: 1
+    careers_url: https://salesforce.wd12.myworkdayjobs.com/External_Career_Site
+    official_domains: [salesforce.wd12.myworkdayjobs.com, careers.salesforce.com]
+    sources:
+      - {provider: workday, board: "salesforce.wd12.myworkdayjobs.com|salesforce|External_Career_Site", search_terms: ["software engineer", "AI engineer"]}
+  - name: Uber
+    priority: 1
+    careers_url: https://www.uber.com/global/en/careers/list/?location=IND
+    official_domains: [uber.com]
+    notes: No public job API found; covered by web search.
+  - name: Atlassian
+    priority: 1
+    careers_url: https://www.atlassian.com/company/careers/all-jobs?location=India
+    official_domains: [atlassian.com]
+    sources:
+      - {provider: atlassian, board: atlassian}
+  - name: ServiceNow
+    priority: 1
+    careers_url: https://careers.servicenow.com/jobs/?location=India
+    official_domains: [careers.servicenow.com, jobs.smartrecruiters.com]
+    sources:
+      - {provider: smartrecruiters, board: ServiceNow, enabled: false, notes: "robots.txt disallows generic agents; enable at your discretion"}
+    notes: Covered by web search while the SmartRecruiters feed is disabled.
+  - name: Oracle
+    priority: 2
+    careers_url: https://careers.oracle.com/jobs/#en/sites/jobsearch/requisitions?location=India
+    official_domains: [careers.oracle.com, eeho.fa.us2.oraclecloud.com]
+    sources:
+      - {provider: oracle, board: "eeho.fa.us2.oraclecloud.com|CX_45001|300000000106947", search_terms: ["software engineer", "developer", "machine learning"]}
+  - name: Intuit
+    priority: 1
+    careers_url: https://jobs.intuit.com/search-jobs/India
+    official_domains: [jobs.intuit.com]
+    sources:
+      - {provider: sitemap, board: "https://jobs.intuit.com/sitemap.xml|/job/(bengaluru|bangalore|hyderabad|pune|chennai|gurugram|gurgaon|noida|mumbai|india)/"}
+  - name: Qualcomm
+    priority: 2
+    careers_url: https://careers.qualcomm.com/careers?location=India
+    official_domains: [careers.qualcomm.com]
+    sources:
+      - {provider: eightfold, board: "careers.qualcomm.com|qualcomm.com", search_terms: ["software engineer", "machine learning"]}
+  - name: Cisco
+    priority: 1
+    careers_url: https://jobs.cisco.com/jobs/SearchJobs/?21178=%5B169482%5D
+    official_domains: [cisco.wd5.myworkdayjobs.com, jobs.cisco.com, careers.cisco.com]
+    sources:
+      - {provider: workday, board: "cisco.wd5.myworkdayjobs.com|cisco|Cisco_Careers", search_terms: ["software engineer", "AI engineer"]}
+  - name: Walmart Global Tech
+    priority: 1
+    careers_url: https://careers.walmart.com/results?q=software%20engineer&jobCountry=IN
+    official_domains: [careers.walmart.com]
+    notes: Search API disallowed by robots.txt; covered by web search.
+
+  # ---- Comparable product companies with verified public ATS boards and India roles ----
+  - {name: Databricks, priority: 1, sources: [{provider: greenhouse, board: databricks}]}
+  - {name: Stripe, priority: 1, sources: [{provider: greenhouse, board: stripe}]}
+  - {name: MongoDB, priority: 2, sources: [{provider: greenhouse, board: mongodb}]}
+  - {name: Okta, priority: 2, sources: [{provider: greenhouse, board: okta}]}
+  - {name: Zscaler, priority: 2, sources: [{provider: greenhouse, board: zscaler}]}
+  - {name: Pure Storage, priority: 2, sources: [{provider: greenhouse, board: purestorage}]}
+  - {name: Rubrik, priority: 2, sources: [{provider: greenhouse, board: rubrik}]}
+  - {name: GitLab, priority: 2, sources: [{provider: greenhouse, board: gitlab}]}
+  - {name: Elastic, priority: 2, sources: [{provider: greenhouse, board: elastic}]}
+  - {name: Datadog, priority: 2, sources: [{provider: greenhouse, board: datadog}]}
+  - {name: Twilio, priority: 2, sources: [{provider: greenhouse, board: twilio}]}
+  - {name: Coinbase, priority: 2, sources: [{provider: greenhouse, board: coinbase}]}
+  - {name: Airbnb, priority: 2, sources: [{provider: greenhouse, board: airbnb}]}
+  - {name: Groww, priority: 3, sources: [{provider: greenhouse, board: groww}]}
+  - {name: Palantir, priority: 2, sources: [{provider: lever, board: palantir}]}
+  - {name: Meesho, priority: 3, sources: [{provider: lever, board: meesho}]}
+  - {name: Zeta, priority: 3, sources: [{provider: lever, board: zeta}]}
+  - {name: CRED, priority: 3, sources: [{provider: lever, board: cred}]}
+  - {name: OpenAI, priority: 1, sources: [{provider: ashby, board: openai}]}
+  - {name: Snowflake, priority: 2, sources: [{provider: ashby, board: snowflake}]}
+  - {name: Notion, priority: 2, sources: [{provider: ashby, board: notion}]}
+  - {name: Sarvam AI, priority: 2, sources: [{provider: ashby, board: sarvam}]}
+
+roles:
+  - {name: Software Engineer, priority: primary, keywords: ["software engineer", "software development engineer", "software developer", "member of technical staff", "mts", "sde", "swe", "developer"]}
+  - {name: Backend Engineer, priority: primary, keywords: ["backend", "back end", "server side", "api engineer", "distributed systems"]}
+  - {name: Full-Stack Engineer, priority: primary, keywords: ["full stack", "fullstack", "full-stack"]}
+  - {name: AI Engineer, priority: primary, keywords: ["ai engineer", "applied ai", "genai", "generative ai", "llm", "agentic", "ai/ml", "applied scientist"]}
+  - {name: Machine Learning Engineer, priority: primary, keywords: ["machine learning", "ml engineer", "mlops"]}
+  - {name: Frontend Engineer, priority: secondary, keywords: ["frontend", "front end", "front-end", "ui engineer", "web engineer"]}
+  - {name: Platform Engineer, priority: secondary, keywords: ["platform engineer", "cloud engineer", "infrastructure engineer", "site reliability", "sre", "devops"]}
+
+exclude_title_keywords: [director, vice president, head of, intern, internship, sales, account executive, recruiter]
+
+locations:
+  preferred_cities: [Hyderabad, Bengaluru, Pune, Chennai, Gurugram, Noida]
+  home_country: India
+  allow_other_home_country_cities: true
+  allow_remote: true
+  remote_regions_eligible: [India, APAC, Asia, Worldwide, Anywhere, Global]
+  international_eligible_countries: []   # add countries where you are authorised to work
+
+compensation:
+  target_annual_lpa: 30
+  fx_to_inr: {USD: 84.0, EUR: 91.0, GBP: 107.0, SGD: 63.0, CAD: 61.0, AUD: 55.0}
+
+freshness:
+  preferred_hours: 72
+  max_age_days: 60
+
+weights:
+  skills: 0.30
+  role_fit: 0.20
+  experience: 0.15
+  compensation: 0.08
+  company: 0.07
+  location: 0.12
+  freshness: 0.08
+  required_skill_share: 0.75
+  ai_weight: 0.35
+
+tiers: {a: 78, b: 65, c: 50}
+
+experience:
+  hard_exclude_years_gap: 4
+
+limits:
+  max_ai_scores_per_run: 25
+  ai_score_min_deterministic: 55
+  auto_tailor_per_run: 3
+  auto_tailor_min_tier: A
+  notify_max_jobs: 10
+  notify_min_tier: B
+  workday_max_details_per_company: 40
+
+# Gemini + Grounding with Google Search (needs LLM_PROVIDER=gemini). Counts against the daily
+# LLM call/spend caps in .env; each grounded query is priced via PRICE_GROUNDED_PROMPT_USD.
+web_search:
+  enabled: true
+  scope: no_feed              # no_feed = only companies without an enabled feed; all = every company with official_domains
+  max_queries_per_run: 12
+  max_page_fetches_per_run: 30

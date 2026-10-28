@@ -1,0 +1,13 @@
+# Never upload secrets or personal data to Cloud Build.
+.env
+.env.*
+!.env.example
+data/
+.git/
+**/node_modules/
+**/.next/
+frontend/out/
+**/.venv/
+**/__pycache__/
+**/.pytest_cache/
+backend/tests/
