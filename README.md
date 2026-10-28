@@ -40,17 +40,25 @@ responses, CAPTCHAs and bot checks are never bypassed.
 - No application is marked *Submitted* without your explicit approval of the exact documents/answers **and**
   evidence of submission. The browser helper never clicks Submit.
 
-## Local setup (macOS / Linux) — one command
+## Local setup — one command
 
-```bash
-./start.sh
-```
+**Windows 10/11:** double-click `run.cmd` (or run `.\run.cmd` in PowerShell / Command Prompt).
+**macOS / Linux:** `./start.sh`
 
-That's it. On a new laptop it installs/builds whatever is missing (Python 3.11+, Node 20+ and the Tectonic LaTeX
-compiler via Homebrew on macOS; prints instructions on Linux if Python/Node are missing), creates `.env`
+That's it. On a new laptop it installs/builds whatever is missing (Python 3.12, Node.js LTS and the Google Cloud
+CLI via winget on Windows or Homebrew on macOS; the Tectonic LaTeX compiler is downloaded), creates `.env`
 (asks you for a dashboard password or generates one), offers to turn on Gemini, migrates the
 database, starts the app on http://127.0.0.1:8000 and opens your browser. Re-running only redoes what changed.
-Stop with Ctrl+C. Options: `--port 8080`, `--no-browser`, `--setup-only`, `--setup-ai`. Windows: run it inside WSL.
+Stop with Ctrl+C.
+
+| | Windows (`run.cmd`) | macOS / Linux (`start.sh`) |
+|---|---|---|
+| Other port | `-Port 8080` | `--port 8080` |
+| Don't open the browser | `-NoBrowser` | `--no-browser` |
+| Install/build only | `-SetupOnly` | `--setup-only` |
+| Sign in to Google / change project for Gemini | `-SetupAI` | `--setup-ai` |
+
+If Windows just installed Python or Node and says it can't find them yet, close the window and run `run.cmd` again.
 
 - **Jobs refresh when you start the app** if the last daily run is older than `AUTO_REFRESH_HOURS` (default 20)
   — it runs in the background while you browse.

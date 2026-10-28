@@ -160,6 +160,7 @@ def compile_tex(src: str, timeout: int = 180) -> CompileResult:
         tex.write_text(src, encoding="utf-8")
         try:
             p = subprocess.run([exe, "--keep-logs", "--outdir", d, str(tex)], cwd=d, capture_output=True, text=True,
+                               encoding="utf-8", errors="replace",  # Windows' default console encoding is not UTF-8
                                timeout=timeout, env={**os.environ, "HOME": os.environ.get("HOME", d)})
         except subprocess.TimeoutExpired:
             return CompileResult(False, None, None, f"LaTeX compilation timed out after {timeout}s")

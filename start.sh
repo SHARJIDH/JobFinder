@@ -8,7 +8,7 @@
 #   ./start.sh --setup-ai      (re)connect Gemini: sign in to Google and pick a Google Cloud project
 #
 # Safe to re-run: it only installs or rebuilds what is missing or changed. Stop the app with Ctrl+C.
-# Windows: run it inside WSL (Ubuntu).
+# Windows: use run.cmd instead (native PowerShell version: start.ps1).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -37,7 +37,7 @@ interactive() { [[ -t 0 && -t 1 ]]; }
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
-[[ "$OS" == "Darwin" || "$OS" == "Linux" ]] || die "Unsupported OS '$OS'. On Windows, run this inside WSL (Ubuntu)."
+[[ "$OS" == "Darwin" || "$OS" == "Linux" ]] || die "Unsupported OS '$OS'. On Windows, double-click run.cmd instead."
 mkdir -p .tools/bin
 export PATH="$ROOT/.tools/bin:$PATH"
 [[ -d .tools/google-cloud-sdk/bin ]] && export PATH="$ROOT/.tools/google-cloud-sdk/bin:$PATH"
